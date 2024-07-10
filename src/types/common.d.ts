@@ -9,8 +9,8 @@ interface PageParams {
   [key: string]: string;
 }
 interface DynamicProps {
-  children: React.ReactNode;
   params: PageParams;
+  searchParams: { [key: string]: string | string[] | undefined };
 }
 
 
