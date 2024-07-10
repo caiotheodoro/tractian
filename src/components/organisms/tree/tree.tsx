@@ -1,5 +1,5 @@
 "use client";
-import React, { memo, useMemo } from "react";
+import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
 import styles from "@/components/organisms/tree/tree.module.css";
 import SearchIcon from "@/components/atoms/icon/search";
 import { useGetAssetsAndLocations } from "@/hooks/companies";
@@ -7,6 +7,8 @@ import { useParams } from "next/navigation";
 import Node from "@/components/organisms/tree/node/node";
 import useCompanyStore from "@/hooks/stores/useCompany";
 import Empty from "@/components/atoms/empty/empty";
+import { debounce } from "lodash";
+import Skeleton from "@/components/atoms/skeleton/skeleton";
 
 const Tree = () => {
   const router = useParams<PageParams>();
@@ -17,8 +19,8 @@ const Tree = () => {
     filter
   );
 
-  const renderNodes = useMemo(
-    () => (items: INode[]) => {
+  const renderNodes = useCallback(
+    (items: INode[]) => {
       return items.map((item) => (
         <Node key={item.id} isOpen={!!filter} {...item}>
           {item.children && renderNodes(item.children)}
@@ -28,9 +30,33 @@ const Tree = () => {
     [filter]
   );
 
-  if (isLoading && !isComplete) return <>Loading...</>;
+  const [renderedItems, setRenderedItems] = useState<React.ReactNode[]>([]);
+
+  const debouncedRenderNodes = useMemo(
+    () =>
+      debounce((items: INode[]) => {
+        setRenderedItems(renderNodes(items));
+      }, 30),
+    [renderNodes]
+  );
+
+  useEffect(() => {
+    if (data?.children) {
+      debouncedRenderNodes(data.children);
+    }
+    return () => {
+      debouncedRenderNodes.cancel();
+    };
+  }, [data?.children, debouncedRenderNodes]);
 
   const hasData = (data?.children?.length ?? 0) > 0;
+
+  if (isLoading || !isComplete)
+    return (
+      <section className={styles.container}>
+        <Skeleton />
+      </section>
+    );
   return (
     <section className={styles.container}>
       <div className={styles.header}>
@@ -46,7 +72,7 @@ const Tree = () => {
       </div>
 
       <div className={styles.content}>
-        {hasData ? renderNodes(data?.children as INode[]) : <Empty />}
+        {hasData ? renderedItems : <Empty />}
       </div>
     </section>
   );

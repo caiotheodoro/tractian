@@ -1,5 +1,6 @@
 import React, {
   createElement,
+  memo,
   ReactNode,
   useCallback,
   useMemo,
@@ -73,4 +74,4 @@ const Node: React.FC<ITreeViewItemProps> = ({
   );
 };
 
-export default Node;
+export default memo(Node);

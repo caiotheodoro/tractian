@@ -2,6 +2,8 @@
   width: 100%;
   display: flex;
   gap: 0.6rem;
+  z-index: 1;
+  position: relative;
 }
 
 
