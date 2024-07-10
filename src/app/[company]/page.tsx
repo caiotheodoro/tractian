@@ -1,21 +1,40 @@
-import Button from '@/components/atoms/button/button'
-import React from 'react'
-import styles from '@/app/[company]/page.module.css'
-import LockIcon from '@/components/icon/lock'
-import DangerIcon from '@/components/icon/danger'
+import React from "react";
+import styles from "@/app/[company]/page.module.css";
+import Preview from "@/components/organisms/preview/preview";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
+import CompanyContract from "@/api/company/contract/company";
+import Header from "@/components/molecules/company/header/header";
+const Tree = React.lazy(() => import("@/components/organisms/tree/tree"));
 
-export default function Company({params: {company}}:Readonly<DynamicProps>) {
+export default async function Company({
+  params: { company },
+}: Readonly<DynamicProps>) {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ["local-assets", company],
+    queryFn: async () => {
+      const assets = await CompanyContract.getAssets.execute(company);
+      const locations = await CompanyContract.getLocations.execute(company);
+
+      return { assets, locations };
+    },
+    staleTime: 1000 * 60 * 10,
+  });
+
   return (
-    <div className={styles.header}>
-        <div className={styles.headerText}>Ativos <span>/ {company}</span></div>
-        <div className={styles.headerButtons}>
-          <Button type="ghost" size="medium" icon={<LockIcon />} >
-            <span>Filter label</span>
-          </Button>
-          <Button type="ghost" size="medium" icon={<DangerIcon />} >
-            <span>Crítico</span>
-          </Button>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <div className={styles.container}>
+        <Header companyId={company} />
+        <div className={styles.view}>
+          <Tree />
+          <Preview />
         </div>
       </div>
-  )
+    </HydrationBoundary>
+  );
 }
