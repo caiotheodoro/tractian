@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+
+
+
+.container h4 {
+  margin: 0;
+}
+
+.container p {
+  display: flex;
+  align-items: center; 
+  gap: 0.5rem;
+  color: rgba(var(--gray-500));
+}

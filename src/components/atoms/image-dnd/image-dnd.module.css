@@ -1,0 +1,23 @@
+ .container {
+  height: 226px;
+  width: 336px;
+  border: 2px solid rgba(var(--blue-400));
+  border-style: dashed;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: rgba(var(--blue-50))
+ }
+
+ .centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  font-size: 0.875rem;
+  color: rgba(var(--blue-500));
+  text-align: center;
+  padding: 1rem;
+ }
