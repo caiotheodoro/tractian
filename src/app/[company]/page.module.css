@@ -1,38 +1,31 @@
-
-.header {
+.container {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: var(--muted);
-  padding: 1rem 1.5rem;
+  flex-direction: column;
+  height: 100%;
 }
 
-.headerText {
+.view {
   display: flex;
-  align-items: center;
+  height: 100%;
   gap: 0.5rem;
-  font-size: 1.5rem;
-  font-weight: 600;
+  overflow: hidden;
+
 }
-.headerText span {
-  font-size: 1rem;
-  font-weight: 400;
-  color: rgba(var(--gray-600));
+.view > :first-child {
+  width: 36%;
+}
+.view > :last-child {
+  width: 64%;
 }
 
-.headerButtons {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.headerButton {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  height: 2rem;
-  border: 1px solid var(--outline);
-  background: none;
-  padding: 0 0.5rem;
-  font-size: 0.875rem;
+@media (max-width: 768px) {
+  .view {
+    flex-direction: column;
+  }
+  .view > :first-child {
+    width: 100%;
+  }
+  .view > :last-child {
+    width: 100%;
+  }
 }
