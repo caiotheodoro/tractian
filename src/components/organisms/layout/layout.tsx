@@ -1,15 +1,14 @@
-'use client'
-import Header from '@/components/molecules/header/header'
-import React from 'react'
-import styles from './layout.module.css'
+"use client";
+import React from "react";
 
-export default function Layout({children}: Readonly<ComponentProps>) {
+import Header from "@/components/molecules/navbar/header/header";
+import styles from "@/components/organisms/layout/layout.module.css";
+
+export default function Layout({ children }: Readonly<ComponentProps>) {
   return (
     <div className={styles.container}>
-      <Header/>
-      <main className={styles.content}>
-          {children}
-      </main>
+      <Header />
+      <main className={styles.content}>{children}</main>
     </div>
-  )
+  );
 }

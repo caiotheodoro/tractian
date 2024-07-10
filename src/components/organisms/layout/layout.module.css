@@ -1,12 +1,15 @@
 .container {
   height: 100vh;
+  background: rgba(var(--gray-100));
 }
 
 .content {
-  margin: 0.5rem;
+  margin: 0.5rem auto;
   height: calc(100% - 4.5rem);
+
   background: rgba(var(--white));
-  border: 2px solid rgba(var(--border-card));
+  border: 1px solid rgba(var(--border-card));
   border-radius: 0.5rem;
   padding: 1rem;
+  max-width: 83.5rem;
 }
