@@ -9,9 +9,11 @@ import useCompanyStore from "@/hooks/stores/useCompany";
 import Empty from "@/components/atoms/empty/empty";
 import { debounce } from "lodash";
 import Skeleton from "@/components/atoms/skeleton/skeleton";
+import { useDebouncedRenderNodes } from "@/hooks/tree";
 
 const Tree = () => {
   const router = useParams<PageParams>();
+  const [localFilter, setLocalFilter] = useState<string>("");
   const { filter, setFilter } = useCompanyStore();
 
   const { data, isLoading, isComplete } = useGetAssetsAndLocations(
@@ -30,26 +32,22 @@ const Tree = () => {
     [filter]
   );
 
-  const [renderedItems, setRenderedItems] = useState<React.ReactNode[]>([]);
-
-  const debouncedRenderNodes = useMemo(
-    () =>
-      debounce((items: INode[]) => {
-        setRenderedItems(renderNodes(items));
-      }, 30),
-    [renderNodes]
+  const renderedItems = useDebouncedRenderNodes(
+    renderNodes,
+    data?.children || []
   );
 
-  useEffect(() => {
-    if (data?.children) {
-      debouncedRenderNodes(data.children);
-    }
-    return () => {
-      debouncedRenderNodes.cancel();
-    };
-  }, [data?.children, debouncedRenderNodes]);
-
   const hasData = (data?.children?.length ?? 0) > 0;
+
+  const debouncedSetFilter = useMemo(
+    () => debounce((value: string) => setFilter({ name: value }), 900),
+    [setFilter]
+  );
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLocalFilter(e.target.value);
+    debouncedSetFilter(e.target.value);
+  };
 
   if (isLoading || !isComplete)
     return (
@@ -64,8 +62,8 @@ const Tree = () => {
           <input
             className={styles.input}
             placeholder="Buscar Ativo ou Local"
-            onChange={(e) => setFilter({ name: e.target.value })}
-            value={filter.name}
+            onChange={handleInputChange}
+            value={localFilter}
           />
           <SearchIcon />
         </div>

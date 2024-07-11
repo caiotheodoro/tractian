@@ -62,12 +62,12 @@ class TreeBuilder {
 
   private filterNodes(node: INode, filter: IFilter): boolean {
     let filterStatus = true;
-
+    const name = filter?.name?.toLowerCase();
     const isTypeEnergy = node.sensorType !== ISensorTypeEnum.Energy
     const isTypeComponent = node.type === INodeTypeEnum.Component
     const isTypeAlert = node.status !== ISensorStatusEnum.Alert
 
-    if (filter.name?.toLowerCase() && !node.name.toLowerCase().includes(filter.name)) {
+    if (name && !node.name.toLowerCase().includes(name)) {
       filterStatus = false;
     }
 
