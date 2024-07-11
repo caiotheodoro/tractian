@@ -9,6 +9,7 @@
 
 ### Arquitetura
 > - A aplicação foi desenvolvida utilizando o padrão de arquitetura Atomic Design, onde os componentes são divididos em átomos, moléculas, organismos e templates.
+> - Para a api, foi utilizada a arquitetura de usecases, gateways e contracts.
 
 
 ### Insights técnicos
@@ -28,9 +29,6 @@
 - Describe which points of the project you would improve if you had more time.
 > - Implementar testes unitários e de integração
 > - Implementar virtualização da lista de nós
-
-### In the README
-- Include a video demonstrating the application opening for each company and selecting a filter.
 
 ## Videos
 
