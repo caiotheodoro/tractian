@@ -32,8 +32,7 @@
 
 ## Videos
 
-[Video 1](https://drive.google.com/file/d/1Hy62znRVClFK5N5ASJmmAwaYYpJfNvzQ/view?usp=sharing)
-[Video 2](https://drive.google.com/file/d/1eP0iRlk60L1C9C0OCyU0X1ih_dc4a3HN/view?usp=sharing)
+[Video](https://drive.google.com/file/d/1vafRmnbI6WXHpEwAzJUTp84FW3OOKPlb/view?usp=sharing)
 
 ### Analytics Report
-![LightHouse Report](./public/performance.png)
+![LightHouse Report](./public/performance.pdf)
