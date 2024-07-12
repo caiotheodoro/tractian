@@ -8,7 +8,7 @@ export interface ICompany {
 export interface ILocation {
   id: string;
   name: string;
-  parentId?: string;
+  parentId?: string | null;
 }
 
 export type ITree = {
@@ -20,12 +20,12 @@ export type ITree = {
 export interface IAsset {
   id: string;
   name: string;
-  parentId?: string;
-  sensorId?: string;
-  sensorType?: ISensorType;
-  status?: ISensorStatus;
-  gatewayId?: string;
-  locationId?: string;
+  parentId?: string | null;
+  sensorId?: string | null;
+  sensorType?: ISensorType | null;
+  status?: ISensorStatus | null;
+  gatewayId?: string | null;
+  locationId?: string | null;
 }
 
 

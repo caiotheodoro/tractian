@@ -34,7 +34,7 @@ class TreeBatchBuilder {
       ...data,
       type,
       children: []
-    };
+    } as INode;
   }
 
   private addChildrenBatch(): void {
